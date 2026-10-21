@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 25px;
+            background: #f1f5f9;
+        }
+
+        h1 { color: #1d4ed8; }
+
+        .table-wrap {
+            overflow-x: auto;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        select, button {
+            padding: 8px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>College Complaint Dashboard</h1>
+    <p>All submitted complaints</p>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Room</th>
+                <th>Problem</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>Update</th>
+            </tr>
+
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.room }}</td>
+                <td>{{ c.problem }}</td>
+                <td>{{ c.details }}</td>
+                <td>{{ c.status }}</td>
+                <td>
+                    <form action="/update/{{ c.id }}" method="POST">
+                        <select name="status">
+                            <option {% if c.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option {% if c.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                            <option {% if c.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                        </select>
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {% if not complaints %}
+    <p>No complaints submitted yet.</p>
+    {% endif %}
+
+    <p><a href="/">Back to complaint form</a></p>
+</body>
+</html>

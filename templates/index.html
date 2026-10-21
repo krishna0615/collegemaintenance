@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Maintenance Complaint</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px #0001;
+        }
+
+        h1 {
+            color: #1d4ed8;
+            font-size: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 16px;
+            font-weight: bold;
+        }
+
+        input, select, textarea, button {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin-top: 7px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 22px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>College Maintenance Complaint</h1>
+        <p>Report a problem in your classroom.</p>
+
+        <form action="/submit" method="POST">
+            <label>Room Number</label>
+            <select name="room" required>
+                <option value="">Select room</option>
+            </select>
+
+            <label>Problem Type</label>
+            <select name="problem" required>
+                <option value="">Select problem</option>
+                <option>Fan</option>
+                <option>Board</option>
+                <option>Light</option>
+                <option>Bench</option>
+                <option>Other</option>
+            </select>
+
+            <label>Problem Details</label>
+            <textarea name="details" rows="4"
+                placeholder="Describe the problem..." required></textarea>
+
+            <button type="submit">Submit Complaint</button>
+        </form>
+    </div>
+
+    <script>
+        const roomSelect = document.querySelector(
+            'select[name="room"]'
+        );
+
+        for (const block of ["A", "B", "C", "D", "E", "F"]) {
+            const maxFloor = block === "F" ? 5 : 3;
+
+            for (let floor = 0; floor <= maxFloor; floor++) {
+                for (let number = 1; number <= 12; number++) {
+                    const roomCode =
+                        block +
+                        String(floor * 100 + number).padStart(3, "0");
+
+                    const option = document.createElement("option");
+                    option.value = roomCode;
+                    option.textContent = roomCode;
+                    roomSelect.appendChild(option);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
